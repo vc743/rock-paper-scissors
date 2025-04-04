@@ -13,3 +13,30 @@ function getComputerChoice() {
       return "scissors";
   }
 }
+
+function getHumanChoice() {
+  let userChoice = prompt("Enter your choice:");
+
+  return userChoice;
+}
+
+let humanSelection = getHumanChoice();
+let computerSelection = getComputerChoice();
+
+function playRound(humanChoice, computerChoice) {
+  if (humanChoice.toLowerCase() === computerChoice) {
+    return "It's a draw!";
+  }
+
+  if (
+    (humanChoice.toLowerCase() === "rock" && computerChoice === "scissors") ||
+    (humanChoice.toLowerCase() === "scissors" && computerChoice === "paper") ||
+    (humanChoice.toLowerCase() === "paper" && computerChoice === "rock")
+  ) {
+    humanScore++;
+    return `You win! ${humanChoice} beats ${computerChoice}.`;
+  } else {
+    computerScore++;
+    return `You lose! ${computerChoice} beats ${humanChoice}.`;
+  }
+}
