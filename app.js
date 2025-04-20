@@ -1,42 +1,56 @@
-let humanScore = 0;
-let computerScore = 0;
+const options = ["rock", "paper", "scissors"];
 
-function getComputerChoice() {
-  let randomNumber = Math.floor(Math.random() * 3) + 1;
+function getcomputerSelection() {
+  let randomNumber = Math.floor(Math.random() * options.length);
 
-  switch (randomNumber) {
-    case 1:
-      return "rock";
-    case 2:
-      return "paper";
-    case 3:
-      return "scissors";
-  }
+  return options[randomNumber];
 }
 
-function getHumanChoice() {
-  let userChoice = prompt("Enter your choice:");
+function gethumanSelection() {
+  let userChoice;
+  do {
+    userChoice = prompt("Enter rock, paper or scissors:");
+  } while (!options.includes(userChoice.toLowerCase()));
 
   return userChoice;
 }
 
-let humanSelection = getHumanChoice();
-let computerSelection = getComputerChoice();
-
-function playRound(humanChoice, computerChoice) {
-  if (humanChoice.toLowerCase() === computerChoice) {
-    return "It's a draw!";
-  }
-
-  if (
-    (humanChoice.toLowerCase() === "rock" && computerChoice === "scissors") ||
-    (humanChoice.toLowerCase() === "scissors" && computerChoice === "paper") ||
-    (humanChoice.toLowerCase() === "paper" && computerChoice === "rock")
-  ) {
-    humanScore++;
-    return `You win! ${humanChoice} beats ${computerChoice}.`;
-  } else {
-    computerScore++;
-    return `You lose! ${computerChoice} beats ${humanChoice}.`;
-  }
+function hasPlayerWonTheRound(human, computer) {
+  return (
+    (human.toLowerCase() === "rock" && computer === "scissors") ||
+    (human.toLowerCase() === "scissors" && computer === "paper") ||
+    (human.toLowerCase() === "paper" && computer === "rock")
+  );
 }
+
+function playGame() {
+  let humanScore = 0;
+  let computerScore = 0;
+  const numberOfRounds = 5;
+
+  for (let i = 0; i < numberOfRounds; i++) {
+    let humanSelection = gethumanSelection();
+    let computerSelection = getcomputerSelection();
+
+    console.log(`Round ${i + 1}:`);
+    console.log(`Player chose: ${humanSelection}`);
+    console.log(`Computer chose: ${computerSelection}`);
+
+    if (hasPlayerWonTheRound(humanSelection, computerSelection)) {
+      humanScore++;
+      console.log(`You win! ${humanSelection} beats ${computerSelection}.`);
+    } else if (humanSelection.toLowerCase() === computerSelection) {
+      console.log("It's a draw!");
+    } else {
+      computerScore++;
+      console.log(`You lose! ${computerSelection} beats ${humanSelection}.`);
+    }
+  }
+
+  console.log(`Score - Player: ${humanScore}, Computer: ${computerScore}`);
+  console.log(
+    `${humanScore > computerScore ? "Player" : "Computer"} has won the game!`
+  );
+}
+
+playGame();
